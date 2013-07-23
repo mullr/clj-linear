@@ -16,6 +16,8 @@
   (is (= {nil 42} (expression 42))))
 
 (deftest build-test
+  (is (= {nil 4} (plus 2 2)))
+  (is (= {nil 6} (times 2 3)))
   (is (= {:x 1, :y 2} (plus :x (times :y 2))))
   (is (= {:op :=, :lhs {:x 1, :y -1}, :rhs {nil 42}}
          (equals (plus :x (minus :y) -42) 0))))

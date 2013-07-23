@@ -53,10 +53,25 @@
 
 ;; ### Functions for building expressions and constraints
 ;; These are used by the eqn macro
-(defn times [a b] (term a b))
-(defn minus [a] (times a -1))
+
+(defprotocol Times
+  (multiply [this second-val]))
+
+(extend-protocol Times
+  java.lang.Number
+  (multiply [this second-val] 
+    (if (number? second-val)
+      (term (* this second-val))
+      (term this second-val)))
+  
+  java.lang.Object
+  (multiply [this second-val]
+    (term this second-val)))
+
+(defn minus [a] (multiply a -1))
+
 (defn plus [& args]
-  (->> args (map term) (apply merge) expr/remove-zero-terms)) 
+  (->> args (map term) (reduce expr/+) expr/remove-zero-terms)) 
 
 (defn equals [lhs rhs] (make-constraint := lhs rhs))
 (defn geq [lhs rhs] (make-constraint :>= lhs rhs)) 

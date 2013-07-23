@@ -6,12 +6,12 @@
 
 (defn- replace-operators [e]
   (walk/postwalk-replace 
-   {'=  builder/equals    'clojure.core/=  builder/equals
-    '>= builder/geq       'clojure.core/>= builder/geq
-    '<= builder/leq       'clojure.core/<= builder/leq
-    '+  builder/plus      'clojure.core/+  builder/plus
-    '-  builder/minus     'clojure.core/-  builder/minus
-    '*  builder/times     'clojure.core/*  builder/times}
+   {'=  `builder/equals    'clojure.core/=  `builder/equals
+    '>= `builder/geq       'clojure.core/>= `builder/geq
+    '<= `builder/leq       'clojure.core/<= `builder/leq
+    '+  `builder/plus      'clojure.core/+  `builder/plus
+    '-  `builder/minus     'clojure.core/-  `builder/minus
+    '*  `builder/multiply  'clojure.core/*  `builder/multiply}
    e))
 
 (defmacro expression
