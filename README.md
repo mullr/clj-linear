@@ -11,7 +11,7 @@ Put this in your lein depenencies:
 
 Then add this to your requires:
 ```clojure
-  [clj-linear :as lp]
+  [clj-linear.core :as lp]
 ```
 
 Then you can use it like this:
