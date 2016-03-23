@@ -1,4 +1,4 @@
-(defproject clj-linear "0.1.0"
+(defproject clj-linear "0.1.1-SNAPSHOT"
   :description "A nice clojure interface for doing linear programming."
   :url "http://github.com/mullr/clj-linear"
   :license {:name "Eclipse Public License"
