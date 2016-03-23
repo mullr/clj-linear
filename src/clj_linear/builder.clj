@@ -11,62 +11,42 @@
      :lhs (expr/without-constant combined)
      :rhs {nil (- constant)}}))
 
-;; A protocol for turning objects into expression terms.
-(defprotocol ExpressionTerm
-  (term [this] [this second-val]))
-
-(extend-protocol ExpressionTerm
-  clojure.lang.PersistentArrayMap
-  (term [this] this)
-
-  java.lang.Number
-  (term
-    ([this] {nil this})
-    ([this variable] {variable this}))
-
-  java.lang.Object
-  (term
-    ([this] {this 1})
-    ([this number] {this number})))
-
-;; Polymorphic fn to coerce a value into an expression
-(defprotocol Expression
-  (expression [this]))
+(defn term
+  "Coerce a value, or a pair of values, into an expression term."
+  ([x]
+   (cond
+     (map? x) x
+     (number? x) {nil x}
+     :else {x 1}))
+  ([x y]
+   (cond
+     (number? x) {y x}
+     (number? y) {x y})))
 
 (declare plus)
 
-(extend-protocol Expression
-  clojure.lang.PersistentArrayMap
-  (expression [this] this)
-
-  java.lang.Object
-  (expression [this] (plus this)))
+(defn expression
+  "Coerce a value to an expression"
+  [x]
+  (if (map? x)
+    x
+    (plus x)))
 
 (defn make-constraint
   "Create a normalized constraint equation with the given operation,
   left-hand, and right-hand sides. "
   [op lhs rhs]
-  (normalize-constraint 
+  (normalize-constraint
    {:op op
     :lhs (expression lhs)
     :rhs (expression rhs)}))
 
-;; ### Functions for building expressions and constraints
-;; These are used by the eqn macro
+;;; Expression and constraint building (used by the expression macro)
 
-(defprotocol Times
-  (multiply [this second-val]))
-
-(extend-protocol Times
-  java.lang.Number
-  (multiply [this second-val] 
-    (if (number? second-val)
-      (term (* this second-val))
-      (term this second-val)))
-  
-  java.lang.Object
-  (multiply [this second-val]
-    (term this second-val)))
+(defn multiply [x y]
+  (if (and (number? x) (number? y))
+    (term (* x y))
+    (term x y)))
 
 (defn minus [a] (multiply a -1))
 
