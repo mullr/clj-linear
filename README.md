@@ -9,7 +9,7 @@ A nice clojure api for doing linear programming. It uses Apache Commons Math und
 
 Put this in your lein depenencies:
 ```clojure
-[clj-linear "0.1.0-notyet"]
+[clj-linear "0.1.0"]
 ```
 
 Then add this to your requires:
