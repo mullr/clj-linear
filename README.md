@@ -2,6 +2,9 @@
 
 A nice clojure api for doing linear programming. It uses Apache Commons Math under the covers. 
 
+[![Build Status](https://travis-ci.org/mullr/clj-linear.svg?branch=master)](https://travis-ci.org/mullr/clj-linear)
+
+
 ## Usage
 
 Put this in your lein depenencies:
