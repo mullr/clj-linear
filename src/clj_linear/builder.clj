@@ -51,8 +51,8 @@
 (defn minus [a] (multiply a -1))
 
 (defn plus [& args]
-  (->> args (map term) (reduce expr/+) expr/remove-zero-terms)) 
+  (->> args (map term) (reduce expr/+) expr/remove-zero-terms))
 
 (defn equals [lhs rhs] (make-constraint := lhs rhs))
-(defn geq [lhs rhs] (make-constraint :>= lhs rhs)) 
+(defn geq [lhs rhs] (make-constraint :>= lhs rhs))
 (defn leq [lhs rhs] (make-constraint :<= lhs rhs))

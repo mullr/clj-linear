@@ -1,18 +1,16 @@
 (ns clj-linear.expression
   (:refer-clojure :exclude [+ - *]))
 
-;; ### Expression utilities 
-;;
-;; These are various utilities for manipulating linear expressions
-;; stored as a variable -> coefficient map.
+;; Utilities for for manipulating linear expressions stored as a
+;; variable -> coefficient map.
 
-(defn- map-vals 
+(defn- map-vals
   "Utility to map f over the values of map 'amap'."
   [f amap]
   (into {} (for [[key val] amap]
              [key (f val)])))
 
-(defn coefficient 
+(defn coefficient
   "Get the coefficient for v in expr, or 0 if it doesn't exist. "
   [expr v]
   (or (get expr v) 0))

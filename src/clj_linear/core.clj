@@ -5,13 +5,19 @@
             [clj-linear.builder :as builder]))
 
 (defn- replace-operators [e]
-  (walk/postwalk-replace 
-   {'=  `builder/equals    'clojure.core/=  `builder/equals
-    '>= `builder/geq       'clojure.core/>= `builder/geq
-    '<= `builder/leq       'clojure.core/<= `builder/leq
-    '+  `builder/plus      'clojure.core/+  `builder/plus
-    '-  `builder/minus     'clojure.core/-  `builder/minus
-    '*  `builder/multiply  'clojure.core/*  `builder/multiply}
+  (walk/postwalk-replace
+   {'= `builder/equals
+    '>= `builder/geq
+    '<= `builder/leq
+    '+ `builder/plus
+    '- `builder/minus
+    '* `builder/multiply
+    'clojure.core/= `builder/equals
+    'clojure.core/>= `builder/geq
+    'clojure.core/<= `builder/leq
+    'clojure.core/+ `builder/plus
+    'clojure.core/- `builder/minus
+    'clojure.core/* `builder/multiply}
    e))
 
 (defmacro expression
